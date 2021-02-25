@@ -1,14 +1,20 @@
 package uaslp.ingenieria.labs.list;
 
 class Node {
-    private int dato;
+    private int data;
+    private Node next;
+    private Node previous;
 
-    public int getDato() {
-        return dato;
+    Node(int data){
+        this.data=data;
     }
 
-    public void setDato(int dato) {
-        this.dato = dato;
+    public int getDato() {
+        return data;
+    }
+
+    public void setDato(int data) {
+        this.data = data;
     }
 
     public Node getNext() {
@@ -26,7 +32,4 @@ class Node {
     public void setPrevious(Node previous) {
         this.previous = previous;
     }
-
-    private Node next;
-    private Node previous;
 }
