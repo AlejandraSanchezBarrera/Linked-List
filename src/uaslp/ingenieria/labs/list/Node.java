@@ -9,11 +9,11 @@ class Node {
         this.data=data;
     }
 
-    public int getDato() {
+    public int getData() {
         return data;
     }
 
-    public void setDato(int data) {
+    public void setData(int data) {
         this.data = data;
     }
 

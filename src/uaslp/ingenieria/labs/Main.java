@@ -1,68 +1,58 @@
 package uaslp.ingenieria.labs;
 
+import uaslp.ingenieria.labs.list.Iterator;
 import uaslp.ingenieria.labs.list.LinkedList;
+import uaslp.ingenieria.labs.list.ReverseIterator;
 
 public class Main {
 
-    public static void main(String[] args) {
-	    LinkedList lista1=new LinkedList();
+	public static void main(String[] args) {
 
-	    lista1.add(1);
-	    lista1.add(4);
+		LinkedList lista1 = new LinkedList();
 
-	    System.out.println("el tamaño es:"+lista1.getSize());
+		lista1.add(1);
+		lista1.add(4);
+		lista1.add(3);
+		lista1.add(7);
 
-	    lista1.add(3);
-        lista1.add(7);
+		Iterator it = lista1.getIterator();
 
-        System.out.println("el tamaño es:"+lista1.getSize());
+		while(it.hasNext()){
+			Iterator backupIt = new Iterator(it);
+			int element = it.next(); //regresar el dato y avanzar el iterador
 
-        int data= lista1.get(2);
+			if(element == 3){
+				lista1.insert(10, LinkedList.BEFORE, backupIt);
+			}
 
-        //complejidad de O(n^2)
-        for(int i=0;i<lista1.getSize();i++){
-        	System.out.println("el dato en "+i+" es: "+lista1.get(i));
+			if(element == 7){
+				lista1.insert(15, LinkedList.AFTER, backupIt);
+			}
 		}
 
-		System.out.println("-----------------------------");
+		lista1.delete(3);
 
-        lista1.delete(1);
+		System.out.println("---------------------");
 
-		for(int i=0;i<lista1.getSize();i++){
-			System.out.println("el dato en "+i+" es: "+lista1.get(i));
+		System.out.println("El tamaño es:" + lista1.getSize());
+
+		it = lista1.getIterator();
+
+		while(it.hasNext()){
+			int element = it.next();
+
+			System.out.println("Dato: " + element);
 		}
 
-		System.out.println("-----------------------------");
+		System.out.println("---------------------");
 
-		lista1.delete(0);
+		ReverseIterator reverseIterator = lista1.getReverseIterator();
 
-		for(int i = 0; i< lista1.getSize(); i++){
-			System.out.println("El dato en " + i + " es: " + lista1.get(i));
+		while(reverseIterator.hasNext()){
+			int element = reverseIterator.next();
+
+			System.out.println("Dato: " + element);
 		}
 
-		System.out.println("-----------------------------");
-
-		lista1.delete(lista1.getSize() - 1);
-
-		for(int i = 0; i< lista1.getSize(); i++){
-			System.out.println("El dato en " + i + " es: " + lista1.get(i));
-		}
-
-		System.out.println("-----------------------------");
-
-		lista1.delete(0);
-
-		for(int i = 0; i< lista1.getSize(); i++){
-			System.out.println("El dato en " + i + " es: " + lista1.get(i));
-		}
-
-		System.out.println("-----------------------------");
-
-		System.out.println("El tamaño es: " + lista1.getSize());
-    }
+	}
 }
-
-//clases: main, LikedList, System
-//objetos: lista1, out
-//métodos: add, getSize, main, printLn
-//constructor: LinkedList

@@ -1,77 +1,83 @@
 package uaslp.ingenieria.labs.list;
 
+/**
+ * Lista doblemente ligada
+ */
 public class LinkedList {
+
+    public static final int BEFORE = 0;
+    public static final int AFTER = 1;
+
     private Node head;
     private Node tail;
     private int size;
 
     /**
-     * insert date at the end of the list
-     * @param data data to be inserted
+     * Inserts data at the end of the list
+     * @param data Data to be inserted
      */
-
     public void add(int data) {
         Node node = new Node(data);
 
         node.setPrevious(tail);
 
-        if(tail!=null)  {
+        if (tail != null) {
             tail.setNext(node);
         }
 
-        if(head==null)  {
-            head=node;
+        if (head == null) {
+            head = node;
         }
 
-        tail=node;
+        tail = node;
         size++;
     }
 
     /**
-     * @param index 0-1index
-     * @return
+     * @param index 0-index
+     * @return data in index
      */
-
     public int get(int index) {
-        Node currentNode=head;
-        int currentIndex=0;
+        Node currentNode = head;
+        int currentIndex = 0;
 
-        while(currentIndex < index){
-            currentNode=currentNode.getNext();
+        while (currentIndex < index) {
+            currentNode = currentNode.getNext();
             currentIndex++;
         }
-        return currentNode.getDato();
+
+        return currentNode.getData();
     }
 
-    public void delete(int index){
-        Node currentNode=head;
-        int currentIndex=0;
+    public void delete(int index) {
+        Node currentNode = head;
+        int currentIndex = 0;
 
-        if(index<0 || index>=size){
+        if (index < 0 || index >= size) {
             return;
         }
 
         size--;
 
-        if(size==0){
-            head=null;
-            tail=null;
+        if (size == 0) {
+            head = null;
+            tail = null;
             return;
         }
 
-        if(index==0){
-            head=head.getNext();
+        if (index == 0) {
+            head = head.getNext();
             head.setPrevious(null);
         }
 
-        if(index==size){
-            tail=tail.getPrevious();
+        if (index == size) {
+            tail = tail.getPrevious();
             tail.setNext(null);
         }
 
-        if (index>0 && index<size){
-            while(currentIndex<index){
-                currentNode=currentNode.getNext();
+        if (index > 0 && index < size) {
+            while (currentIndex < index) {
+                currentNode = currentNode.getNext();
                 currentIndex++;
             }
             currentNode.getPrevious().setNext(currentNode.getNext());
@@ -79,13 +85,50 @@ public class LinkedList {
         }
     }
 
-    //iterador
+    public Iterator getIterator() {
+        return new Iterator(head);
+    }
 
-    public int getSize(){
+    public void insert(int data, int position, Iterator it) {
+        // ¿qué ofrece java para restringir los valores de position a solamente BEFORE y AFTER?
+
+        Node newNode = new Node(data);
+        Node currentNode = it.getCurrentNode();
+
+        if (position == AFTER) {
+            newNode.setNext(currentNode.getNext());
+            newNode.setPrevious(currentNode);
+            currentNode.setNext(newNode);
+            if (newNode.getNext() != null) {
+                newNode.getNext().setPrevious(newNode);
+            } else {
+                tail = newNode;
+            }
+        } else if (position == BEFORE) {
+            newNode.setPrevious(currentNode.getPrevious());
+            newNode.setNext(currentNode);
+            currentNode.setPrevious(newNode);
+            if (newNode.getPrevious() != null) {
+                newNode.getPrevious().setNext(newNode);
+            } else {
+                head = newNode;
+            }
+        } else {
+            System.out.println("No conozco el valor de position");
+        }
+        size++;
+    }
+
+    public ReverseIterator getReverseIterator() {
+        return new ReverseIterator(tail);
+    }
+
+    public int getSize() {
         return size;
     }
-}
 
+
+}
 
 
 
